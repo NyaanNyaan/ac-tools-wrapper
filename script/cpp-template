@@ -1,0 +1,8 @@
+#include "competitive-template.hpp"
+
+void solve(){
+  {% if prediction_success %}
+  {{input_part}}
+  {% endif %}
+  
+}
