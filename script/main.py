@@ -26,6 +26,7 @@ parser.add_argument('cmd')
 parser.add_argument('-c', '--contest', default=None, help='set contest name')
 parser.add_argument('-p', '--problem', default=None, help='set problem')
 parser.add_argument('-u', '--unlock-safety', action='store_true')
+parser.add_argument('-d', '--debug', action='store_true')
 args = parser.parse_args()
 
 # set config
@@ -75,7 +76,7 @@ elif args.cmd in ['t', 'test']:
   if args.problem == None:
     cnfg.set_problem_id(workspace, config, config_path)
   # compile
-  compile_problem(config, workspace)
+  compile_problem(config, workspace, debug=args.debug)
   # test
   contest_id = config['contest']
   problem_id = config['problem']
