@@ -14,6 +14,19 @@ from stream import exec_cmd, Exec
 from compiling import compile_problem
 import bundle
 
+# escape sequence
+from ctypes import windll, wintypes, byref
+
+STD_OUTPUT_HANDLE = -11
+ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
+
+kernel32 = windll.kernel32
+hOut = kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
+dwMode = wintypes.DWORD()
+kernel32.GetConsoleMode(hOut, byref(dwMode))
+dwMode.value |= ENABLE_VIRTUAL_TERMINAL_PROCESSING
+kernel32.SetConsoleMode(hOut, dwMode)
+
 # filename
 workspace = "C:\\Users\\denjo\\Documents\\kpr"
 tmpl_path = os.path.join(workspace, 'script', 'cpp-template')
