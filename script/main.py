@@ -52,15 +52,20 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 if args.cmd in ['dl', 'download']:
   # set contest
   contest_id = config['contest']
-  cmd = ['atcoder-tools', 'gen', '--workspace', workspace,
-         '--template', tmpl_path, '--config', ac_tools_config, contest_id]
+  cmd = ['atcoder-tools', 'gen',
+         '--workspace', workspace,
+         '--template', tmpl_path,
+         '--config', ac_tools_config,
+         contest_id]
   exec_cmd(cmd)
 
 # debug
 elif args.cmd in ['d', 'debug']:
   if args.problem == None:
     cnfg.set_problem_id(workspace, config, config_path)
-  compile_problem(config, workspace, os.path.join(workspace, 'a.exe'), True)
+  compile_problem(config, workspace,
+                  exe_path=os.path.join(workspace, 'a.exe'),
+                  debug=True)
 
 # execute
 elif args.cmd in ['e', 'exec']:
@@ -118,6 +123,70 @@ elif args.cmd in ['s', 'submit']:
          '--dir', problem_dir, '--force']
   if args.unlock_safety == True:
     cmd.append('-u')
+  exec_cmd(cmd)
+
+# generate naive.cpp and gen.cpp
+elif args.cmd in ['n', 'naive']:
+  if args.problem == None:
+    cnfg.set_problem_id(workspace, config, config_path)
+  contest_id = config['contest']
+  problem_id = config['problem']
+  problem_dir = os.path.join(workspace, contest_id, problem_id)
+  problem_url = '/'.join([
+      'https://atcoder.jp/contests',
+      contest_id,
+      'tasks',
+      contest_id + '_' + problem_id.lower()
+  ])
+  cmd = ['atcoder-tools', 'codegen',
+         '--template', tmpl_path,
+         '--config', ac_tools_config,
+         problem_url]
+  src = subprocess.check_output(cmd).decode('utf-8')
+
+  # naive.cpp
+  with open(os.path.join(problem_dir, 'naive.cpp'), 'w', newline="") as f:
+    f.write(src)
+
+  # gen.cpp
+  src = src.replace('cin >>', 'cout <<')
+  with open(os.path.join(problem_dir, 'gen.cpp'), 'w', newline="") as f:
+    f.write(src)
+
+# compare
+elif args.cmd in ['cmp', 'compare']:
+  if args.problem == None:
+    cnfg.set_problem_id(workspace, config, config_path)
+  contest_id = config['contest']
+  problem_id = config['problem']
+  problem_dir = os.path.join(workspace, contest_id, problem_id)
+
+  compile_problem(config,
+                  workspace,
+                  main_path=os.path.join(problem_dir, 'main.cpp'),
+                  exe_path=os.path.join(problem_dir, 'a.exe'),
+                  debug=args.debug
+                  )
+
+  compile_problem(config,
+                  workspace,
+                  main_path=os.path.join(problem_dir, 'naive.cpp'),
+                  exe_path=os.path.join(problem_dir, 'naive.exe'),
+                  debug=args.debug
+                  )
+
+  compile_problem(config,
+                  workspace,
+                  main_path=os.path.join(problem_dir, 'gen.cpp'),
+                  exe_path=os.path.join(problem_dir, 'gen.exe'),
+                  debug=args.debug
+                  )
+  cmd = ['oj', 'g/i',
+         '-c', os.path.join(problem_dir, 'naive.exe'),
+         '--hack', os.path.join(problem_dir, 'a.exe'),
+         '-t', '3',
+         os.path.join(problem_dir, 'gen.exe')
+         ]
   exec_cmd(cmd)
 
 else:

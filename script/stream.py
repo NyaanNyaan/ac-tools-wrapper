@@ -63,8 +63,13 @@ class Exec:
 
 def exec_cmd(cmd, cwd=None):
   print(' '.join(cmd), flush=True)
+  import subprocess
+  exe = subprocess.Popen(cmd)
+  print('return code : ' + str(exe.wait()))
+  '''
   exe = Exec(cmd, cwd)
   while exe.is_running():
     for line in exe.receive_lines():
       print(line, end='', flush=True)
     time.sleep(0.01)
+  '''
