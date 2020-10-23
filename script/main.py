@@ -149,8 +149,9 @@ elif args.cmd in ['n', 'naive']:
     f.write(src)
 
   # gen.cpp
-  src = src.replace('cin >>', 'cout <<')
+  src = src.replace('cin >>', 'cout << " " <<')
   with open(os.path.join(problem_dir, 'gen.cpp'), 'w', newline="") as f:
+    f.write('#include "misc/rng.hpp"\r\n')
     f.write(src)
 
 # compare

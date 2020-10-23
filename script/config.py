@@ -9,8 +9,8 @@ def read_config(config_path):
   return config
 
 def update_config(config, config_path):
-  with open(config_path, 'w') as f:
-    json.dump(config, f)
+  with open(config_path, 'w', newline='') as f:
+    json.dump(config, f, indent=4)
 
 def set_config(workspace, config_path, args):
   # initialize

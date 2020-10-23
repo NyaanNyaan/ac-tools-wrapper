@@ -65,7 +65,11 @@ def exec_cmd(cmd, cwd=None):
   print(' '.join(cmd), flush=True)
   import subprocess
   exe = subprocess.Popen(cmd)
-  print('return code : ' + str(exe.wait()))
+  return_code = exe.wait()
+  if return_code != 0:
+    print('return code :', return_code,
+          ', cmd :', ' '.join(cmd)
+          )
   '''
   exe = Exec(cmd, cwd)
   while exe.is_running():
