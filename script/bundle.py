@@ -22,10 +22,17 @@ def bundle(dir):
   with open(submit_path, 'w') as f:
     import datetime
     nw = datetime.datetime.now()
+    import random
+    parent_dir = '-'.join(os.path.split(dir))
+    contest_id = os.path.split(parent_dir)[1]
+
     f.write('/**\n')
-    f.write(' *  date : ' + nw.strftime('%Y-%m-%d %H:%M:%S') + '\n')
+    f.write(' *  problem : ' + contest_id.upper() + '\n')
+    f.write(' *  date    : ' + nw.strftime('%Y-%m-%d %H:%M:%S') + '\n')
+    f.write(' *  I wanna be the RedCoder!' + '\n')
     f.write(' */' + '\n')
     f.write('\n')
+    
     cmd = ['oj-bundle', '-I', library_path, buffer]
     src = subprocess.check_output(cmd).decode('utf-8')
     lines = src.split('\n')

@@ -1,6 +1,9 @@
 #include "competitive-template.hpp"
 
 void solve(){
+#ifdef NyaanDebug
+  setbuf(stderr, nullptr);
+#endif
   {% if prediction_success %}
   {{input_part}}
   {% endif %}
