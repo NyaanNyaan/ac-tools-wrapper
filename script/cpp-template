@@ -4,8 +4,17 @@ void solve(){
 #ifdef NyaanDebug
   setbuf(stderr, nullptr);
 #endif
+  // 自戒
+  // ・詰まったらとにかく落ち着いて考察 or 実験！
+  // ・TLEしたら計算量解析！
+  // ・5分で解けない構築は迷わず実験！
+  // ・デバッグに5分詰まったら愚直と比較！
+  // ・難しい計算は落ち着いて立式してから実装！
+  // ・やみくもに投げていいのはエスパー解法だけ！
+  // 
+  // BEGIN HERE
   {% if prediction_success %}
   {{input_part}}
   {% endif %}
-  
+
 }
