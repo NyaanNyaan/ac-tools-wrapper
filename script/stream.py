@@ -64,7 +64,7 @@ class Exec:
 def exec_cmd(cmd, cwd=None):
   print(' '.join(cmd), flush=True)
   import subprocess
-  exe = subprocess.Popen(cmd)
+  exe = subprocess.Popen(cmd,  shell=True)
   return_code = exe.wait()
   if return_code != 0:
     print('return code :', return_code,
