@@ -1,13 +1,16 @@
-#include "competitive-template.hpp"
+#include "template/template.hpp"
+// 
+ 
+using namespace Nyaan;
+void Nyaan::solve(){
 
-void solve(){
 #ifdef NyaanDebug
   setbuf(stderr, nullptr);
 #endif
-  // INSERT
-  // BEGIN HERE
+
   {% if prediction_success %}
   {{input_part}}
   {% endif %}
-  // 
+  // BEGIN HERE
+  
 }

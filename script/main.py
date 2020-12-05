@@ -185,6 +185,7 @@ elif args.cmd in ['cmp', 'compare']:
   cmd = ['oj', 'g/i',
          '-c', os.path.join(problem_dir, 'naive.exe'),
          '--hack', os.path.join(problem_dir, 'a.exe'),
+         '-d', problem_dir, 
          '-t', '3',
          os.path.join(problem_dir, 'gen.exe')
          ]

@@ -6,13 +6,15 @@ import time
 CXX = 'g++'
 CXXFLAGS = ['-I', 'C:\\Users\\denjo\\Desktop\\ABC\\library',
             '-fconstexpr-loop-limit=1048576',
+            '-O2',
+            '-std=gnu++17',
             '-Wall',
             '-Wextra',
+            '-Wfatal-errors',
+            '-Wl,-stack,1073741824',
             '-Wno-unknown-pragmas',
             '-Wno-attributes',
-            '-Wl,-stack,1073741824',
-            '-DNyaan',
-            '-O2'
+            '-Wshadow',
             ]
 
 # function for compiling
